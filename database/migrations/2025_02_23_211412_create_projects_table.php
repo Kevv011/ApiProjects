@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //Tabla Projects
-        Schema::create('proyectos', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
             $table->text('description');
-            $table->enum('status', ['active','finish'])->default('active');
+            $table->enum('status', ['activo', 'finalizado'])->default('activo');
             $table->date('date_start');
             $table->date('date_finish');
-            $table->timestamps();
+            $table->softDeletes();      //Agrega funcionalidad de SoftDeletes
+            $table->timestamps();       //Agrega create_at y update_at
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('proyectos');
+        Schema::dropIfExists('projects');
     }
 };
