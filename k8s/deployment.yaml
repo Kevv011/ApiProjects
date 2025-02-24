@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: laravel-api-deployment
+spec:
+  replicas: 2  # Definición de réplicas
+  selector:
+    matchLabels:
+      app: laravel-api
+  template:
+    metadata:
+      labels:
+        app: laravel-api
+    spec:
+      containers:
+      - name: laravel-api
+        image: kevpalacios/laravel-api:latest  # Imagen subida a DockerHub
+        ports:
+        - containerPort: 80  # Puerto de exposición
+        env:
+        - name: APP_ENV
+          value: production  # Valor usado para producción
+        - name: APP_KEY
+          valueFrom:
+            secretKeyRef:
+              name: laravel-secret  # Usado si hay un Secret en Kubernetes para manejar claves
+              key: app_key
+        resources:
+          requests:
+            memory: "256Mi"  # Memoria solicitada por el contenedor
+            cpu: "0.5"       # CPU solicitada por el contenedor
+          limits:
+            memory: "512Mi"  # Memoria máxima que el contenedor puede usar
+            cpu: "1"         # CPU máxima que el contenedor puede usar

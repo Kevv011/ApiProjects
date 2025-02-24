@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: laravel-api-service
+spec:
+  type: LoadBalancer  # Balanceo de carga externo
+  selector:
+    app: laravel-api  #Nombre que debe coincidir con el Deployment
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000

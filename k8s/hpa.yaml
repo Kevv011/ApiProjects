@@ -1,0 +1,18 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: laravel-api-hpa  # Nombre del HPA
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: laravel-api-deployment  # Nombre del Deployment a escalar
+  minReplicas: 2                  # Número mínimo de Pods en el Deployment
+  maxReplicas: 10                 # Número máximo de Pods que el HPA puede escalar
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu                 # Basado en el uso de la CPU
+        target:
+          type: Utilization
+          averageUtilization: 50  # Si la CPU está al 50% de uso promedio, procede a escalar
