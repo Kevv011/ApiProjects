@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
@@ -94,4 +95,72 @@ class ProjectController extends Controller
             'data' => $deletedProjects
         ], 200);
     }
+
+    //Metodo para hacer inserciones de proyectos de prueba
+    public function storeProjects()
+    {
+
+        DB::table('projects')->insert([
+            [
+                "name" => "Proyecto 1",
+                "description" => "Esta es una descripcion del proyecto 1",
+                "status" => "activo",
+                "date_start" => "2025-02-28",
+                "date_finish" => "2025-02-28",
+                "created_at" => now(), 
+                "updated_at" => now()
+            ],
+            [
+                "name" => "Proyecto 2",
+                "description" => "Esta es una descripcion del proyecto 2",
+                "status" => "activo",
+                "date_start" => "2025-02-28",
+                "date_finish" => "2025-02-28",
+                "created_at" => now(), 
+                "updated_at" => now()
+            ],
+            [
+                "name" => "Proyecto 3",
+                "description" => "Esta es una descripcion del proyecto 3",
+                "status" => "finalizado",
+                "date_start" => "2025-02-28",
+                "date_finish" => "2025-02-28",
+                "created_at" => now(), 
+                "updated_at" => now()
+            ],
+            [
+                "name" => "Proyecto 4",
+                "description" => "Esta es una descripcion del proyecto 4",
+                "status" => "activo",
+                "date_start" => "2025-02-28",
+                "date_finish" => "2025-02-28",
+                "created_at" => now(), 
+                "updated_at" => now()
+            ]
+        ]);
+
+        return response()->json([
+            'Message' => 'Projects created successfully'
+        ], 201);
+    }
+
+    //Metodo para eliminar todos los registros de proyectos (Creado para pruebas)
+    public function deleteAll()
+    {
+
+        DB::table('projects')->delete();
+        DB::statement('ALTER TABLE projects AUTO_INCREMENT = 1');
+
+        return response()->json([
+            'message' => 'Records delete successfully'
+        ]);
+    }
 }
+//    JSON agregado por si se necesita probar el agregar un proyecto
+// { 
+//     "name": "Proyecto 1",
+//     "description": "Esta es una descripcion de un proyecto 2",
+//     "status": "activo",
+//     "date_start": "2025-02-28",
+//     "date_finish": "2025-02-28"
+//   }
